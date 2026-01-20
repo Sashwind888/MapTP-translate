@@ -225,7 +225,7 @@ namespace MapTP.App
                 this.ShowInTaskbar = false;
                 TrayShowMenuItem.IsEnabled = true;
                  new ToastContentBuilder()
-                        .AddText("MapTP在任务栏托盘中处于隐藏状态!").Show();
+                        .AddText("MapTP已隐藏到系统托盘!").Show();
             }
             else WindowState = WindowState.Minimized;
         }
@@ -234,7 +234,7 @@ namespace MapTP.App
         {
             if (HideCB.IsChecked.Value)
             {
-                var r=MessageBox.Show("你确定要退出 MapTP?\n(使用“最小化”按键将MapTP隐藏为托盘图标)", "关闭MapTP", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var r=MessageBox.Show("你确定要退出 MapTP?\n(使用“最小化”按键将MapTP隐藏到系统托盘)", "关闭MapTP", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (r != MessageBoxResult.Yes) return;
             }
             Close();
@@ -353,7 +353,7 @@ namespace MapTP.App
             TrayStartMenuItem.Click -= StartButtonClick;
             TrayStartMenuItem.Click += StopButtonClick;
             TrayIcon.Icon = new BitmapImage(new Uri("pack://application:,,,/logo.ico"));
-            TrayIcon.TooltipText = "MapTP (活动状态)";
+            TrayIcon.TooltipText = "MapTP (正在运行)";
         }
 
         private void StopButtonClick(object sender, RoutedEventArgs e)
@@ -361,12 +361,12 @@ namespace MapTP.App
             started = false;
             StopButton.Visibility = Visibility.Collapsed;
             StartButton.Visibility = Visibility.Visible;
-            TrayWorkingMenuItem.Header = "MapTP 未运行...";
+            TrayWorkingMenuItem.Header = "MapTP 已停止...";
             TrayStartMenuItem.Header = "启动";
             TrayStartMenuItem.Click -= StopButtonClick;
             TrayStartMenuItem.Click += StartButtonClick;
             TrayIcon.Icon = new BitmapImage(new Uri("pack://application:,,,/logo-inactive.ico"));
-            TrayIcon.TooltipText = "MapTP (未运行状态)";
+            TrayIcon.TooltipText = "MapTP (已停止)";
         }
 
         /// <summary>
