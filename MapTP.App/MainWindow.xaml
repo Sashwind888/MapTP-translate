@@ -1,0 +1,138 @@
+﻿<Window x:Class="MapTP.App.MainWindow"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MapTP.App" xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
+        mc:Ignorable="d"
+        Title="MapTP" Height="552" Width="800"
+        Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
+        WindowStyle="None"
+        Background="#33ff4444">
+    <WindowChrome.WindowChrome>
+        <WindowChrome x:Name="WindowChrome" GlassFrameThickness="0,0,-1,0"/>
+    </WindowChrome.WindowChrome>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="48"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" MouseLeftButtonDown="OnTitleBarMouseDown" Background="#77ffffff">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Black" Margin="20,0,0,0" Style="{StaticResource TextBlockDefault}">MapTP</TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,5,20,0">
+                <Grid HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0">
+                    <Button x:Name="StartButton" Grid.Column="1"  Foreground="Black" Background="LightPink" BorderBrush="Black" HorizontalAlignment="Right" Margin="10,0,0,0" Style="{StaticResource ButtonPrimary}" Content="开始映射" Click="StartButtonClick" Width="150"/>
+                    <Button x:Name="StopButton" Visibility="Collapsed" Grid.Column="1" HorizontalAlignment="Right" Margin="10,0,0,0" Style="{StaticResource ButtonDanger}" Content="结束映射" Click="StopButtonClick" Width="150"/>
+                </Grid>
+                <Button Style="{StaticResource ButtonIcon}" Foreground="Black" Click="OnMinButtonClick" hc:IconElement.Geometry="{StaticResource WindowMinGeometry}"/>
+                <Button Style="{StaticResource ButtonIcon}" Foreground="Black" Click="OnCloseButtonClick" hc:IconElement.Geometry="{StaticResource CloseGeometry}"/>
+            </StackPanel>
+        </Grid>
+        <ScrollViewer Grid.Row="0">
+            <Grid x:Name="MainGrid" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" x:Name="label_PtpExists" HorizontalAlignment="Stretch" Visibility="Collapsed" Content="PTP does not exist!" Margin="10" Style="{DynamicResource LabelWarning}" ></Label>
+                <Border x:Name="TpCard" Grid.Row="1" Background="#99FFFFFF" Style="{StaticResource BorderRegion}" Effect="{StaticResource EffectShadow2}" Margin="20,20,20,0">
+                    <StackPanel x:Name="MainCardGrid" >
+                        <TextBlock HorizontalAlignment="Left" Margin="5" Text="触摸板区域设置" Style="{StaticResource TextBlockTitle}"/>
+                        <Grid x:Name="TpAreaGrid" Height="100" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid x:Name="TpRectGrid" Height="100" Width="150" Grid.Column="0">
+                                <Rectangle x:Name="TpAreaRect" Height="100" Width="150" Stroke="Gray"></Rectangle>
+                                <Rectangle x:Name="TpMapareaRect" VerticalAlignment="Top" HorizontalAlignment="Left"  Fill="#55F00074" Stroke="#FFF00074" ></Rectangle>
+                            </Grid>
+                            <UniformGrid Margin="10,0,10,0" Grid.Column="1" Columns="2">
+                                <TextBox x:Name="Tpsx" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="limitnumber" TextChanged="OnTouchpadMapUpdate" Style="{StaticResource TextBoxExtend}" Margin="0,0,5,0" hc:InfoElement.Placeholder="开始 X 坐标" VerticalAlignment="Center"/>
+                                <TextBox x:Name="Tpsy" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="limitnumber" TextChanged="OnTouchpadMapUpdate" Style="{StaticResource TextBoxExtend}" Margin="5,0,0,0" hc:InfoElement.Placeholder="开始 Y 坐标" VerticalAlignment="Center"/>
+                                <TextBox x:Name="Tpex" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="limitnumber" TextChanged="OnTouchpadMapUpdate" Style="{StaticResource TextBoxExtend}" Margin="0,0,5,0" hc:InfoElement.Placeholder="结束 X 坐标" VerticalAlignment="Center"/>
+                                <TextBox x:Name="Tpey" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="limitnumber" TextChanged="OnTouchpadMapUpdate" Style="{StaticResource TextBoxExtend}" Margin="5,0,0,0" hc:InfoElement.Placeholder="结束 Y 坐标" VerticalAlignment="Center"/>
+                            </UniformGrid>
+                            <UniformGrid Grid.Column="2" Columns="1">
+                                <TextBlock Grid.Column="0" x:Name="TouchpadSizeTB" Margin="5" Text="触控板大小: size" Style="{StaticResource TextBlockDefault}" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                <Button Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource ButtonDefault}" Content="校准触摸板尺寸" Click="CalibrateButtonClick" HorizontalAlignment="Left"/>
+                            </UniformGrid>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <Border x:Name="ScCard" Grid.Row="2" Background="#99FFFFFF" Style="{StaticResource BorderRegion}" Effect="{StaticResource EffectShadow2}" Margin="20,20,20,0">
+                    <StackPanel x:Name="ScCardGrid">
+                        <TextBlock HorizontalAlignment="Left" Margin="5" Text="屏幕映射区域设置" Style="{StaticResource TextBlockTitle}"/>
+                        <Grid x:Name="ScAreaGrid" Height="100">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid x:Name="ScRectGrid" Width="150" Height="100">
+                                <Rectangle x:Name="ScAreaRect" Grid.Column="0" Height="100" Width="150" Stroke="Gray"></Rectangle>
+                                <Rectangle x:Name="ScMapareaRect" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" Fill="#55F00074" Stroke="#FFF00074" ></Rectangle>
+                            </Grid>
+                            <UniformGrid Margin="10,0,10,0" Grid.Column="1" Columns="2">
+                                <TextBox x:Name="Scsx" TextChanged="OnScreenMapUpdate" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="limitnumber" Style="{StaticResource TextBoxExtend}" Margin="0,0,5,0" hc:InfoElement.Placeholder="开始 X 坐标" VerticalAlignment="Center"/>
+                                <TextBox x:Name="Scsy" TextChanged="OnScreenMapUpdate" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="limitnumber" Style="{StaticResource TextBoxExtend}" Margin="5,0,0,0" hc:InfoElement.Placeholder="开始 Y 坐标" VerticalAlignment="Center"/>
+                                <TextBox x:Name="Scex" TextChanged="OnScreenMapUpdate" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="limitnumber" Style="{StaticResource TextBoxExtend}" Margin="0,0,5,0" hc:InfoElement.Placeholder="结束 X 坐标" VerticalAlignment="Center"/>
+                                <TextBox x:Name="Scey" TextChanged="OnScreenMapUpdate" InputMethod.IsInputMethodEnabled="False" PreviewTextInput="limitnumber" Style="{StaticResource TextBoxExtend}" Margin="5,0,0,0" hc:InfoElement.Placeholder="结束 Y 坐标" VerticalAlignment="Center"/>
+                            </UniformGrid>
+                            <UniformGrid Grid.Column="2" Columns="1">
+                                <TextBlock x:Name="ScreenSizeTB" HorizontalAlignment="Left" Margin="5" Text="屏幕大小: size" Style="{StaticResource TextBlockDefault}"/>
+                                <Button Grid.Column="1" Margin="5,0,0,0" Style="{StaticResource ButtonDefault}" Content="设置为屏幕大小" Click="SuggestButtonClick" HorizontalAlignment="Left"/>
+                            </UniformGrid>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <Border x:Name="OptCard" Grid.Row="3" Background="#99FFFFFF" Style="{StaticResource BorderRegion}" Effect="{StaticResource EffectShadow2}" Margin="20,20,20,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBlock HorizontalAlignment="Left" Margin="5" Text="选项" Style="{StaticResource TextBlockTitle}"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <Button Content="启动屏幕映射尺寸编辑器"  Click="InspectorButtonClick" ToolTip="请勿多次点击，未做打开判断"></Button>
+                            <Button Content="打开日志窗口" Margin="10,0,0,0" Click="AdvancedButtonClick"></Button>
+                            <Button Content="关于 MapTP" Margin="10,0,0,0" Click="AboutButtonClick"></Button>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Grid.Row="2">
+                            <CheckBox x:Name="TurtleCB" Content="海龟模式" IsChecked="False" Click="TurtleCBClick" ToolTip="当开启此功能时，按住触摸板时MapTP会直接帮你按住鼠标左键，一直到您松手"></CheckBox>
+                            <CheckBox x:Name="TrayCB" Content="启用托盘图标" Margin="10,0,0,0" IsChecked="True" Click="TrayCBClick"></CheckBox>
+                            <CheckBox x:Name="HideCB" Content="当最小化时隐藏到系统托盘" Margin="10,0,0,0" IsChecked="True"></CheckBox>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </ScrollViewer>
+        <tray:NotifyIcon
+            x:Name="TrayIcon"
+            TooltipText="MapTP (inactive)"
+            MenuOnRightClick="True"
+            FocusOnLeftClick="True"
+            LeftClick="TrayShowWindowClick"
+            Icon="pack://application:,,,/logo-inactive.ico"
+            >
+            <tray:NotifyIcon.Menu>
+                <ContextMenu>
+                    <MenuItem x:Name="TrayWorkingMenuItem" Header="MapTP is not working..." IsEnabled="False" />
+                    <MenuItem x:Name="TrayStartMenuItem" Header="Start" Click="StartButtonClick" />
+                    <MenuItem x:Name="TrayShowMenuItem" Header="Show MapTP window" Click="TrayShowWindowClick" IsEnabled="False"/>
+                </ContextMenu>
+            </tray:NotifyIcon.Menu>
+        </tray:NotifyIcon>
+    </Grid>
+</Window>

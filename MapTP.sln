@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapTP.App", "MapTP.App\MapTP.App.csproj", "{B640177C-8B8A-4E97-931A-8C13EF816C12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug-R|Any CPU = Debug-R|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Release-R|Any CPU = Release-R|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B640177C-8B8A-4E97-931A-8C13EF816C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B640177C-8B8A-4E97-931A-8C13EF816C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B640177C-8B8A-4E97-931A-8C13EF816C12}.Debug-R|Any CPU.ActiveCfg = Debug-R|Any CPU
+		{B640177C-8B8A-4E97-931A-8C13EF816C12}.Debug-R|Any CPU.Build.0 = Debug-R|Any CPU
+		{B640177C-8B8A-4E97-931A-8C13EF816C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B640177C-8B8A-4E97-931A-8C13EF816C12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B640177C-8B8A-4E97-931A-8C13EF816C12}.Release-R|Any CPU.ActiveCfg = Release-R|Any CPU
+		{B640177C-8B8A-4E97-931A-8C13EF816C12}.Release-R|Any CPU.Build.0 = Release-R|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {135BCA7D-504A-4D24-AE80-E3578975CFCD}
+	EndGlobalSection
+EndGlobal

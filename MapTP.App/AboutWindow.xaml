@@ -1,0 +1,30 @@
+﻿<Window x:Class="MapTP.App.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MapTP.App"
+        mc:Ignorable="d"
+        Title="关于 MapTP" Height="251" Width="400">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0,0,0,1"/>
+    </WindowChrome.WindowChrome>
+    <StackPanel Height="450" Margin="20">
+        <TextBlock HorizontalAlignment="Left" Margin="5" Text="关于 MapTP" Style="{StaticResource TextBlockTitleBold}"/>
+        <TextBlock HorizontalAlignment="Left" Margin="5" Text="MapTP v2.0.0 © Lingrottin 2023-2024，保留部分权利" Style="{StaticResource TextBlockDefault}"/>
+        <TextBlock HorizontalAlignment="Left" Margin="5" Text="" Style="{StaticResource TextBlockDefault}">
+            汉化：
+            <Hyperlink Click="Hyperlink_Click" NavigateUri="https://github.com/Sashwind888/MapTP-translate">
+                 Sashwind888
+            </Hyperlink>
+        </TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="5" Text="本触控板映射软件深受 emoacht/RawInput 的启发。" Style="{StaticResource TextBlockDefaultPrimary}"/>
+        <TextBlock HorizontalAlignment="Left" Margin="5" Text="这个程序使用 MIT license 开源" Style="{StaticResource TextBlockDefault}" TextWrapping="Wrap"/>
+        <TextBlock HorizontalAlignment="Left" Margin="5" Style="{StaticResource TextBlockDefault}" TextWrapping="Wrap">
+            <Hyperlink Click="Hyperlink_Click" NavigateUri="https://github.com/lingrottin/MapTP">
+                查看 Github 上的源代码
+            </Hyperlink>
+        </TextBlock>
+        <Button Background="{x:Null}" Click="Close" Content="关闭"/>
+    </StackPanel>
+</Window>
